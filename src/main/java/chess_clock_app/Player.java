@@ -3,6 +3,7 @@
  */
 package chess_clock_app;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,26 +14,42 @@ import java.util.Objects;
  */
 public final class Player {
 	private final String PL_NAME;
-	private final PlayerClock TIMER;
+	private final ClockAction TIMER;
 	
-	public Player(String plName) {
+	public Player(String plName, ClockAction c) {
 		PL_NAME = plName;
-		TIMER = new PlayerClock();
+		TIMER = c;
 	}
 
+	public void startTurn() {
+		TIMER.start();
+	}
+	
+	public void stopTurn() {
+		TIMER.stop();		
+	}
+	
 	public String getPlayerName() {
 		return PL_NAME;
 	}
 	
-	public PlayerClock getPlayerClock() {
+	public ClockAction getPlayerClock() {
 		return TIMER;
 	}
+	
+	public List<Long> getRecord(){
+		return ((PlayerClock) TIMER).getRecord();
+	}
 
+	public boolean isWhitePlayer() {
+		return TIMER instanceof WhitePlayerClock;
+	}
+	
 	@Override
-	public String toString() {
+	public String toString() {		
 		return String.format(
 				"Player = %s - Time Elapsed = %s", 
-				PL_NAME, TIMER.getElaspsedSeconds());
+				PL_NAME, ((PlayerClock)TIMER).getElaspsedSeconds());
 	}
 
 	@Override
