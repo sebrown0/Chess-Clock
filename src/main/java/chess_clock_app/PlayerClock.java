@@ -10,29 +10,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import utils.PlayerClockException;
-
 /**
  * @author SteveBrown
  *
  */
 public abstract class PlayerClock  implements ClockAction {	
 	private final List<Long> RECORD;
-	private final Clock clockTick;
-		
+	
 	private Instant turnStarted;
 	private long elapsedSecs;
+	
+	protected final Clock clockTick;	
 	
 	protected  ClockAction opponentClock;
 	
 	public PlayerClock(Clock clockTick) {		
 		this.clockTick = clockTick;		
-		RECORD = new ArrayList<>();			
+		RECORD = new ArrayList<>();	
 	}
 	
-	public abstract void 
-		setOpponentClock(ClockAction opponentClock) 
-				throws PlayerClockException ;
+	public abstract PlayerClock setOpponentClock();
 	
 	public long getElaspsedSeconds() {
 		return elapsedSecs;
@@ -47,7 +44,7 @@ public abstract class PlayerClock  implements ClockAction {
 		if(Objects.nonNull(opponentClock)) {
 			opponentClock.stop();
 		}
-		turnStarted = clockTick.instant();
+		turnStarted = clockTick.instant(); 
 	}
 
 	@Override

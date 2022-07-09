@@ -7,8 +7,6 @@ import java.time.Clock;
 import java.time.ZoneId;
 import java.util.Objects;
 
-import utils.PlayerClockException;
-
 /**
  * @author SteveBrown
  *
@@ -29,7 +27,7 @@ public final class Game {
 	public void startGame() {
 		currentPlayer = whitePlayer;
 		whitePlayer.startTurn();
-	}
+	} 
 	
 	public void nextTurn() {
 		stopTurn();
@@ -99,13 +97,13 @@ public final class Game {
 			WhitePlayerClock leftClk = new WhitePlayerClock(clk);
 			BlackPlayerClock rightClk = new BlackPlayerClock(clk);
 			
-			try {
-				leftClk.setOpponentClock(rightClk);
-				rightClk.setOpponentClock(leftClk);
-			} catch (PlayerClockException e) {
-				System.out.println(e.getMessage() + "\nQUITTING");
-				System.exit(0);
-			}
+//			try {
+//				leftClk.setOpponentClock(rightClk);
+//				rightClk.setOpponentClock(leftClk);
+//			} catch (PlayerClockException e) {
+//				System.out.println(e.getMessage() + "\nQUITTING");
+//				System.exit(0);
+//			}
 		
 			whitePlayer = new Player(whitePlName, leftClk);
 			blackPlayer = new Player(blackPlName, rightClk);

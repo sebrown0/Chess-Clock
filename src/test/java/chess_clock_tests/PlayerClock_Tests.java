@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import chess_clock_app.BlackPlayerClock;
 import chess_clock_app.PlayerClock;
 import chess_clock_app.WhitePlayerClock;
-import utils.PlayerClockException;
 import utils.ProgPause;
 
 /**
@@ -23,7 +22,7 @@ import utils.ProgPause;
  * 
  */
 class PlayerClock_Tests {
-	
+	 
 	private static final Clock CLK = 
 			Clock.tickSeconds(ZoneId.of("Europe/Malta"));
 	
@@ -34,46 +33,19 @@ class PlayerClock_Tests {
 	}
 
 	@Test
-	void test_setBlackOpponentsClock_valid() throws PlayerClockException {
-		PlayerClock plClk1 = new WhitePlayerClock(CLK);
-		PlayerClock plClk2 = new BlackPlayerClock(CLK);
-		
-		plClk2.setOpponentClock(plClk1);
-		assertTrue(plClk2.getOpponentClock() instanceof WhitePlayerClock);
+	void test_setBlackOpponentsClock_valid() {
+		PlayerClock plClk = new WhitePlayerClock(CLK).setOpponentClock();
+
+		assertTrue(plClk.getOpponentClock() instanceof BlackPlayerClock);
 	}
 	
 	@Test
-	void test_setWhiteOpponentsClock_valid() throws PlayerClockException {
-		PlayerClock plClk1 = new WhitePlayerClock(CLK);
-		PlayerClock plClk2 = new BlackPlayerClock(CLK);
+	void test_setWhiteOpponentsClock_valid() {		
+		PlayerClock plClk = new BlackPlayerClock(CLK).setOpponentClock();;		
 		
-		plClk1.setOpponentClock(plClk2);
-		assertTrue(plClk1.getOpponentClock() instanceof BlackPlayerClock);
+		assertTrue(plClk.getOpponentClock() instanceof WhitePlayerClock);
 	}
-	
-	@Test
-	void test_setOpponentsClock_invalid() {
-		PlayerClock plClk1 = new WhitePlayerClock(CLK);
-		PlayerClock plClk2 = new WhitePlayerClock(CLK);
 		
-		try {
-			plClk2.setOpponentClock(plClk1);
-		} catch (PlayerClockException e) {
-			assertNull(plClk2.getOpponentClock());
-		}		
-	}
-	
-	@Test
-	void test_getOppenentClock() throws PlayerClockException {
-		PlayerClock plClk1 = new WhitePlayerClock(CLK);
-		PlayerClock plClk2 = new BlackPlayerClock(CLK);
-		
-		plClk2.setOpponentClock(plClk1);
-		PlayerClock opp = (PlayerClock) plClk2.getOpponentClock();
-		
-		assertTrue(plClk1.equals(opp));
-	} 
-	
 	@Test
 	void test_start() {
 		PlayerClock plClk = new BlackPlayerClock(CLK);
